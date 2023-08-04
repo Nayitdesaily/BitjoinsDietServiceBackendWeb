@@ -174,18 +174,89 @@ class DietaController extends Controller
 
       $i = 0;
       $today = Carbon::now()->format('Y-m-d');
+
       $obj_dieta_today = array();
 
       foreach ($obj_final as $obj) {
-
          $fecha_inicio = date('Y-m-d', strtotime($plan_alimentacion->fecultimaact));
          $obj->fecha_inicio = date('Y-m-d', strtotime($fecha_inicio . "+{$i} day"));
          $obj->fecha_inicio_dia = Carbon::createFromFormat('Y-m-d', $obj->fecha_inicio)->format('l');
-
          if ($obj->fecha_inicio == $today) {
             $obj_dieta_today = $obj;
          }
+         $i++;
+      }
 
+      return response()->json([
+         "message" => "The current dieta was found succesfully",
+         "data" => $obj_dieta_today
+      ]);
+   }
+
+   public function get_last_dieta_web(Request $req)
+   {
+      $dietas = Dieta::where('planalimentacion_id', $req->id)->orderBy('id', 'ASC')->get();
+      $plan_alimentacion = PlanAlimentacion::find($req->id);
+
+      if (count($dietas) == 0) {
+         return response()->json([
+            "message" => "Dietas do not found, porfavor ingresa un id de plan de alimentacion valido"
+         ]);
+      }
+
+      $array_merge = array();
+
+      for ($i = 0; $i < count($dietas) - 1; $i++) {
+         $get_id = $dietas[$i]->opcion;
+         $arr_comidas = array();
+
+         for ($j = 0; $j < count($dietas); $j++) {
+            if ($get_id == $dietas[$j]->opcion) {
+               $obj_array_comidas = array('comida' => $dietas[$j]->comida);
+               $obj_array_descripcion = array('descripcion' => $dietas[$j]->descripcion);
+               $obj_com_desc = array_merge((array) $obj_array_comidas, (array) $obj_array_descripcion);
+
+               array_push($arr_comidas, $obj_com_desc);
+            }
+         }
+         $obj_opcion = (object) array('opcion' => $get_id);
+         $obj_comidas = (object) array('comidas' => $arr_comidas);
+         $obj_planalimentacion_id = (object) array('planalimentacion_id' => $dietas[$i]->planalimentacion_id);
+         $obj_oplabel = (object) array('oplabel' => $dietas[$i]->oplabel);
+         $obj_fecha_inicio = (object) array('fecha_inicio' => empty(null));
+         $obj_fecha_inicio_dia = (object) array('fecha_inicio_dia' => empty(null));
+
+         $obj_join_comidas = (object) array_merge(
+            (array) $obj_planalimentacion_id,
+            (array)$obj_fecha_inicio,
+            (array)$obj_fecha_inicio_dia,
+            (array) $obj_oplabel,
+            (array) $obj_opcion,
+            (array) $obj_comidas,
+         );
+         array_push($array_merge, $obj_join_comidas);
+      }
+
+      $obj_final  = array();
+
+      foreach ($array_merge as $current) {
+         if (!in_array($current, $obj_final)) {
+            $obj_final[] = $current;
+         }
+      }
+
+      $i = 0;
+      $today = Carbon::now()->subHours(5)->format('Y-m-d');
+
+      $obj_dieta_today = array();
+
+      foreach ($obj_final as $obj) {
+         $fecha_inicio = date('Y-m-d', strtotime($plan_alimentacion->fecultimaact));
+         $obj->fecha_inicio = date('Y-m-d', strtotime($fecha_inicio . "+{$i} day"));
+         $obj->fecha_inicio_dia = Carbon::createFromFormat('Y-m-d', $obj->fecha_inicio)->format('l');
+         if ($obj->fecha_inicio == $today) {
+            $obj_dieta_today = $obj;
+         }
          $i++;
       }
 

@@ -35,7 +35,6 @@ class EvolucionController extends Controller
         $evoluciones = Evolucion::where('usuario_id', $req->id)->orderBy('id', 'DESC')->get();
         $user = Usuario::find($req->id);
 
-
         $newEvolucion = (object) [
             'fecha' => '',
             'peso' => '',
@@ -94,32 +93,6 @@ class EvolucionController extends Controller
         $evolucion->observacion = $req->observacion;
         $evolucion->actividades = $req->actividades;
         $evolucion->usuario_id = $req->usuario_id;
-
-
-        //Validation of the requests
-
-        $errors = Validator::make(
-            $req->all(),
-            [
-                'fecha' => 'required',
-                'peso' => 'required',
-                'imc' => 'required',
-                'p_grasa' => 'required',
-                'p_masa' => 'required',
-                'cintura' => 'required',
-                'otramedida' => 'required',
-                'label_otra' => 'required',
-                'observacion' => 'required',
-                'actividades' => 'required',
-                'usuario_id' => 'required',
-            ]
-        )->errors();
-
-        if ($errors->all() != []) {
-            return response()->json([
-                "errors" => $errors->all()
-            ]);
-        }
 
         //Save Evolucion object in database
         $evolucion->save();

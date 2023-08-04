@@ -77,16 +77,16 @@ Route::controller(EjercicioController::class)->group(function () {
 
 //Evolucion Endpoints
 Route::controller(EvolucionController::class)->group(function () {
-    Route::post('/evolucion/create', 'create'); //Create grow
-    Route::get('/evolucion', 'get_all'); //Get all grows
-    Route::get('/evolucion/{id}', 'get_per_id'); //Get exercises
+    Route::post('/evolucion/create', 'create'); 
+    Route::get('/evolucion', 'get_all'); 
+    Route::get('/evolucion/{id}', 'get_per_id'); 
 });
 
 //Platos Endpoints
 Route::controller(PlateController::class)->group(function () {
-    Route::post('/platos/create', 'create'); //Create plato
-    Route::get('/platos', 'get_all'); //Get all grows
-    Route::get('/platos/{id}', 'get_per_id'); //Get excerises
+    Route::post('/platos/create', 'create'); 
+    Route::get('/platos', 'get_all'); 
+    Route::get('/platos/{id}', 'get_per_id'); 
 });
 
 //Receta Endpoints
@@ -112,16 +112,17 @@ Route::controller(CanalVideosController::class)->group(function () {
 
 //Canal Tag Endpoints
 Route::controller(CanalTagController::class)->group(function () {
-    Route::post('/canal_tags/create', 'create'); //Create canal tag
-    Route::get('/canal_tags', 'get_all'); //Get all grows
-    Route::get('/canal_tags/{id}', 'get_per_id'); //Get excerises
+    Route::post('/canal_tags/create', 'create'); 
+    Route::get('/canal_tags', 'get_all'); 
+    Route::get('/canal_tags/{id}', 'get_per_id'); 
 });
 
 //Plan Alimentacion Intercambio Endpoints
 Route::controller(PlanAlimentacion_IntercambioController::class)->group(function () {
-    Route::post('/planalimentacion_intercambio/create', 'create'); //Create food plan
-    Route::get('/planalimentacion_intercambio', 'get_all'); //Get all food plans
-    Route::get('/planalimentacion_intercambio/{id}', 'get_per_id'); //Get food plan
+    Route::post('/planalimentacion_intercambio/create', 'create'); 
+    Route::get('/planalimentacion_intercambio', 'get_all'); 
+    Route::get('/planalimentacion_intercambio/{id}', 'get_per_id'); 
+    Route::get('/intercambios', 'get_intercambio'); 
 });
 
 //Plan Alimentacion Recetas Endpoints
@@ -133,11 +134,12 @@ Route::controller(PlanAlimentacion_RecetasController::class)->group(function () 
 
 //Dieta Endpoints
 Route::controller(DietaController::class)->group(function () {
-    Route::post('/dieta/create', 'create'); //Create food plan
-    Route::get('/plan-alimentacion/dietas/{id}', 'get_dieta'); //Get food plan
-    Route::get('/plan-alimentacion/recomendaciones/{id}', 'get_recomendaciones'); //Get food plan
-    Route::get('/plan-alimentacion/dieta-of-today/{id}', 'get_last_dieta'); //Get food plan
-    Route::get('/plan-alimentacion/dietas/web/{id}', 'get_dieta_web'); //Get food plan
+    Route::post('/dieta/create', 'create');
+    Route::get('/plan-alimentacion/dietas/{id}', 'get_dieta');
+    Route::get('/plan-alimentacion/recomendaciones/{id}', 'get_recomendaciones');
+    Route::get('/plan-alimentacion/dieta-of-today/{id}', 'get_last_dieta');
+    Route::get('/plan-alimentacion-web/dieta-of-today/{id}', 'get_last_dieta_web'); 
+    Route::get('/plan-alimentacion/dietas/web/{id}', 'get_dieta_web');
 });
 
 //Recomendacion Endpoints

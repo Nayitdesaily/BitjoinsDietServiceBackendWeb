@@ -30,7 +30,7 @@ class PersonaController extends Controller
 
 
         return response()->json([
-            'message' => 'Personas was found successfully',
+            'message' => 'Fueron encontrados los objetos de la tabla personas con exito',
             'data' => $personas
         ]);
     }
@@ -145,6 +145,7 @@ class PersonaController extends Controller
                     'talla' => $req->talla,
                     'peso_ideal' => $req->peso_ideal,
                     'p_masa_muscular' => $req->p_masa_muscular,
+                    'p_grasa_ideal' => $req->p_grasa_ideal,
                     'consultorio_id' => $req->consultorio_id,
                     'gustos' => $req->gustos,
                     'no_gustos' => $req->no_gustos,

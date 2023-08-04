@@ -16,7 +16,7 @@ class UsuarioController extends Controller
 
       $usuario->tipousuario_id = 4;
       $usuario->email = $req->email;
-      $usuario->pass = md5(getenv('HASH_PASSWORD') . $req->pass);
+      $usuario->pass = sha1(getenv('HASH_PASSWORD') . $req->pass);
       $usuario->persona_id = $req->persona_id;
 
       $usuario->save();
@@ -34,7 +34,9 @@ class UsuarioController extends Controller
    public function login(Request $req)
    {
 
-      $user = Usuario::where('email', $req->email)->where('tipousuario_id', 4)->first();
+      $user = Usuario::where('email', $req->email)->first();
+
+      // return $user;
 
       if (!$user) {
          return response()->json([

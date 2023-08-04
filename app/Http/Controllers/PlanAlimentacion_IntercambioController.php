@@ -6,6 +6,7 @@ use App\Models\PlanAlimentacion;
 use App\Models\PlanAlimentacion_Intercambio;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class PlanAlimentacion_IntercambioController extends Controller
@@ -80,5 +81,11 @@ class PlanAlimentacion_IntercambioController extends Controller
             "message" => "Planes de alimentacion intercambio were found successfully",
             "data" => $planes_alimentacion_intercambio
         ]);
+    }
+
+    public function get_intercambio(){
+        $intercambios = DB::table('intercambio')->get();
+
+        return $intercambios;
     }
 }
